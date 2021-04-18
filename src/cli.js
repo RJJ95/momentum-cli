@@ -1,4 +1,4 @@
-import { addComponent } from "./addComponent";
+import { addComponent } from "./add-component";
 
 export function cli(args) {
   const command = args[2];
