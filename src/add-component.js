@@ -4,6 +4,50 @@ import { viewTemplate } from "./templates/view-template";
 import { styleTemplate } from "./templates/style-template";
 import { indexTemplate } from "./templates/index-template";
 
+function createComponentFiles(
+  componentType,
+  componentNameWithoutCapitals,
+  componentNameCapitalized
+) {
+  fs.appendFile(
+    `./src/components/${componentType}s/${componentNameWithoutCapitals}/${componentNameWithoutCapitals}-view.js`,
+    viewTemplate(componentNameWithoutCapitals, componentNameCapitalized),
+    (err) => err && console.log(err)
+  );
+  fs.appendFile(
+    `./src/components/${componentType}s/${componentNameWithoutCapitals}/${componentNameWithoutCapitals}-style.js`,
+    styleTemplate(),
+    (err) => err && console.log(err)
+  );
+  fs.appendFile(
+    `./src/components/${componentType}s/${componentNameWithoutCapitals}/index.js`,
+    indexTemplate(componentNameWithoutCapitals),
+    (err) => err && console.log(err)
+  );
+}
+
+function createPageFiles(
+  componentType,
+  componentNameWithoutCapitals,
+  componentNameCapitalized
+) {
+  fs.appendFile(
+    `./src/${componentType}s/${componentNameWithoutCapitals}/${componentNameWithoutCapitals}-view.js`,
+    viewTemplate(componentNameWithoutCapitals, componentNameCapitalized),
+    (err) => err && console.log(err)
+  );
+  fs.appendFile(
+    `./src/${componentType}s/${componentNameWithoutCapitals}/${componentNameWithoutCapitals}-style.js`,
+    styleTemplate(),
+    (err) => err && console.log(err)
+  );
+  fs.appendFile(
+    `./src/${componentType}s/${componentNameWithoutCapitals}/index.js`,
+    indexTemplate(componentNameWithoutCapitals),
+    (err) => err && console.log(err)
+  );
+}
+
 export function addComponent() {
   inquirer
     .prompt([
@@ -17,7 +61,7 @@ export function addComponent() {
         type: "list",
         name: "type",
         message: "What kind of component do you want to create?",
-        choices: ["primitive", "construct", "section", "page"],
+        choices: ["primitive", "construct", "section", "functional", "page"],
       },
     ])
     .then((answers) => {
@@ -34,29 +78,34 @@ export function addComponent() {
       if (answers.type === "page") {
         fs.mkdir(
           `./src/${answers.type}s/${componentNameWithoutCapitals}`,
-          (err) => err && console.log(err)
+          (err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              createPageFiles(
+                answers.type,
+                componentNameWithoutCapitals,
+                componentNameCapitalized
+              );
+            }
+          }
         );
       } else {
         fs.mkdir(
           `./src/components/${answers.type}s/${componentNameWithoutCapitals}`,
-          (err) => err && console.log(err)
+          (err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              createComponentFiles(
+                answers.type,
+                componentNameWithoutCapitals,
+                componentNameCapitalized
+              );
+            }
+          }
         );
       }
-      fs.appendFile(
-        `./src/components/${answers.type}s/${componentNameWithoutCapitals}/${componentNameWithoutCapitals}-view.js`,
-        viewTemplate(componentNameWithoutCapitals, componentNameCapitalized),
-        (err) => err && console.log(err)
-      );
-      fs.appendFile(
-        `./src/components/${answers.type}s/${componentNameWithoutCapitals}/${componentNameWithoutCapitals}-style.js`,
-        styleTemplate(),
-        (err) => err && console.log(err)
-      );
-      fs.appendFile(
-        `./src/components/${answers.type}s/${componentNameWithoutCapitals}/index.js`,
-        indexTemplate(componentNameWithoutCapitals),
-        (err) => err && console.log(err)
-      );
     })
     .catch(console.error);
 }

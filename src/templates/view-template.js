@@ -1,5 +1,5 @@
 export const viewTemplate = (componentName, componentNameCapitalized) =>
-  `import { Wrapper } from "./${componentName}"
+  `import { Wrapper } from "./${componentName}-style"
 
 const ${componentNameCapitalized} = () => {
     return <Wrapper></Wrapper>
