@@ -29,7 +29,8 @@ function createComponentFiles(
 function createPageFiles(
   componentType,
   componentNameWithoutCapitals,
-  componentNameCapitalized
+  componentNameCapitalized,
+  componentNameFirstLetterLowercase
 ) {
   fs.appendFile(
     `./src/${componentType}s/${componentNameWithoutCapitals}/${componentNameWithoutCapitals}-view.js`,
@@ -46,6 +47,32 @@ function createPageFiles(
     indexTemplate(componentNameWithoutCapitals),
     (err) => err && console.log(err)
   );
+  const file = "./src/config/routes.js";
+  const data = fs.readFileSync(file); //read existing contents into data
+  const fd = fs.openSync(file, "w+");
+  const importStatement = new Buffer(
+    `import ${componentNameCapitalized} from "../pages/${componentNameWithoutCapitals}";\n`
+  );
+  const search = new Buffer("export const routes = {");
+  const newRoute = new Buffer(`${componentNameFirstLetterLowercase}: {
+    path: "/${componentNameWithoutCapitals}",
+    exact: true,
+    component: ${componentNameCapitalized},
+  },
+};`);
+
+  fs.writeSync(fd, importStatement, 0, importStatement.length, 0); //write new data
+  fs.writeSync(fd, data, 0, data.length, importStatement.length); //append old data
+  fs.writeSync(
+    fd,
+    newRoute,
+    0,
+    newRoute.length,
+    data.length + importStatement.length - 3
+  );
+  fs.close(fd, (err) => {
+    err && console.log(err);
+  });
 }
 
 export function addComponent() {
@@ -69,11 +96,13 @@ export function addComponent() {
         .replace(/\s+/g, "-")
         .toLowerCase();
       const componentNameCapitalized = answers.name
-        .toLowerCase()
         .split(" ")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ")
         .replace(/\s+/g, "");
+      const componentNameFirstLetterLowercase =
+        componentNameCapitalized.charAt(0).toLowerCase() +
+        componentNameCapitalized.slice(1);
 
       if (answers.type === "page") {
         fs.mkdir(
@@ -85,7 +114,8 @@ export function addComponent() {
               createPageFiles(
                 answers.type,
                 componentNameWithoutCapitals,
-                componentNameCapitalized
+                componentNameCapitalized,
+                componentNameFirstLetterLowercase
               );
             }
           }
