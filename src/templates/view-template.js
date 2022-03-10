@@ -1,4 +1,4 @@
-export const viewTemplate = (componentName, componentNameCapitalized) =>
+const viewTemplate = (componentName, componentNameCapitalized) =>
   `import { Wrapper } from "./${componentName}-style"
 
 const ${componentNameCapitalized} = () => {
@@ -6,5 +6,6 @@ const ${componentNameCapitalized} = () => {
 };
 
 export default ${componentNameCapitalized};
-    
     `;
+
+export default viewTemplate;

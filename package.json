@@ -4,7 +4,6 @@
   "description": "A CLI to bootstrap my new projects",
   "main": "src/index.js",
   "bin": {
-    "@rjj95/momentum": "bin/create-project",
     "momentum": "bin/create-project"
   },
   "publishConfig": {
