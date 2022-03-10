@@ -4,7 +4,7 @@ const fs = require("fs");
 import createPrimitiveFiles from "./create-primitive-file";
 import createComponentFiles from "./create-component-files";
 
-export function addComponent() {
+function addComponent() {
   inquirer
     .prompt([
       {
@@ -64,3 +64,5 @@ export function addComponent() {
     })
     .catch(console.error);
 }
+
+export default addComponent;
