@@ -1,6 +1,6 @@
 const readmeTemplate = () => `# React Boilerplate
  
-This project has been kickstarted using Momentum CLI.
+This project has been kickstarted using Propulse.
  
 ## Used packages
  

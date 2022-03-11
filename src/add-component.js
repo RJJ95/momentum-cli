@@ -3,6 +3,7 @@ const fs = require("fs");
 
 import createPrimitiveFiles from "./create-primitive-file";
 import createComponentFiles from "./create-component-files";
+import addRoute from "./add-route";
 
 function addComponent() {
   inquirer

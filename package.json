@@ -1,10 +1,10 @@
 {
-  "name": "@rjj95/momentum",
-  "version": "1.0.0",
-  "description": "A CLI to bootstrap my new projects",
+  "name": "propulse",
+  "version": "1.0.2",
+  "description": "A CLI to bootstrap React projects",
   "main": "src/index.js",
   "bin": {
-    "momentum": "bin/create-project"
+    "propulse": "bin/create-project"
   },
   "publishConfig": {
     "access": "public"
@@ -14,12 +14,22 @@
   },
   "keywords": [
     "cli",
-    "momentum"
+    "propulse",
+    "react"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Ricardo de Vries",
+  "license": "MIT",
   "dependencies": {
     "esm": "^3.2.25",
     "inquirer": "^8.0.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RJJ95/momentum-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RJJ95/momentum-cli/issues"
+  },
+  "homepage": "https://github.com/RJJ95/momentum-cli#readme"
 }
