@@ -1,6 +1,6 @@
 {
   "name": "propulse",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A CLI to bootstrap React projects",
   "main": "src/index.js",
   "bin": {

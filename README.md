@@ -2,11 +2,23 @@
 
 Propulse is a CLI tool to both kickstart your React project and accelerate your development experience.
 
+## Install Propulse
+
+You will need to run the following command to install Propulse globally on your system:
+
+`npm install -g propulse`
+
+You may need to install using admin priviliges. Run this command:
+
+`sudo npm install -g propulse`
+
+This will install Propulse globally, and enable you to initiate a project anywhere on your system.
+
 ## Create a project
 
 To create a React project using Propulse, navigate to a directory and use the following command:
 
-`propulse create [project name]`
+`propulse create [projectName]`
 
 This will create a React project using the following tools:
 
@@ -14,6 +26,7 @@ This will create a React project using the following tools:
 - Styled Components
 - React Router Dom
 - Axios
+- env-cmd
 
 The folder structure will also be set in a way so that you can use Propulse to add components on the fly.
 

@@ -7,7 +7,7 @@ export function cli(args) {
   switch (command) {
     case "add":
       return addComponent();
-    case "init":
+    case "create":
       return createProject(args[3]);
     default:
       return console.log("No correct arguments provided.");

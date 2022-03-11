@@ -9,6 +9,8 @@ import routerTemplate from "./templates/router-template";
 import appTemplate from "./templates/app-template";
 import appIndexTemplate from "./templates/app-index-template";
 import readmeTemplate from "./templates/readme-template";
+import environmentsView from "./templates/environments-view";
+import apiConfigTemplate from "./templates/apiConfig";
 
 import createComponentFiles from "./create-component-files";
 
@@ -98,6 +100,16 @@ function createFolderStructure() {
     routerTemplate(),
     (err) => err && console.log(err)
   );
+  fs.appendFileSync(
+    "./src/config/environments/.env-local",
+    environmentsView(),
+    (err) => err && console.log(err)
+  );
+  fs.appendFileSync(
+    "./src/api/config/api-config.js",
+    apiConfigTemplate(),
+    (err) => err && console.log(err)
+  );
 
   fs.unlinkSync("./src/App.js");
   fs.unlinkSync("./src/App.css");
@@ -131,6 +143,12 @@ function createFolderStructure() {
   createComponentFiles("section", "footer", "Footer");
   createComponentFiles("section", "primary-navigation", "PrimaryNavigation");
 
+  const rawdata = fs.readFileSync("./package.json");
+  const jsonPackage = JSON.parse(rawdata);
+  jsonPackage.scripts.start =
+    "env-cmd -f src/config/environments/.env-local react-scripts start";
+  fs.writeFileSync("./package.json", JSON.stringify(jsonPackage, null, 2));
+
   console.log("Folder structure has been set up.");
 }
 
@@ -141,6 +159,7 @@ async function createProject(projectName) {
     await installDependency("styled-components");
     await installDependency("axios");
     await installDependency("react-router-dom");
+    await installDependency("env-cmd");
   } catch (error) {
     console.log(error);
   }
