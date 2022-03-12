@@ -1,5 +1,7 @@
 const fs = require("fs");
 
+import styleTemplate from "./templates/style-template";
+
 function createPrimitiveFiles(
   componentType,
   componentNameWithoutCapitals,
@@ -7,7 +9,7 @@ function createPrimitiveFiles(
 ) {
   fs.appendFile(
     `./src/components/${componentType}s/${componentNameWithoutCapitals}.js`,
-    viewTemplate(componentNameWithoutCapitals, componentNameCapitalized),
+    styleTemplate(componentNameWithoutCapitals, componentNameCapitalized),
     (err) => err && console.log(err)
   );
 }

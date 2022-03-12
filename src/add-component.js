@@ -31,19 +31,10 @@ function addComponent() {
         .replace(/\s+/g, "");
 
       if (answers.type === "primitive") {
-        fs.mkdir(
-          `./src/components/${answers.type}s/${componentNameWithoutCapitals}`,
-          (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-              createPrimitiveFiles(
-                answers.type,
-                componentNameWithoutCapitals,
-                componentNameCapitalized
-              );
-            }
-          }
+        createPrimitiveFiles(
+          answers.type,
+          componentNameWithoutCapitals,
+          componentNameCapitalized
         );
       } else {
         fs.mkdir(
