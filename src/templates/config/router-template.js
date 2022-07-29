@@ -1,7 +1,8 @@
-const routerTemplate = () => `import { useRoutes } from "react-router-dom";
+const routerTemplate = () => `import { FC } from "react";
+import { useRoutes } from "react-router-dom";
 import routes from "./routes/routes";
 
-const Router = () => {
+const Router: FC = (): JSX.Element => {
   const routing = useRoutes(routes());
 
   return <>{routing}</>;

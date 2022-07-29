@@ -1,5 +1,5 @@
 const routesTemplate = () => `// Components
-import Home from "../../components/pages/home";
+import Home from "../../../components/pages/home";
 
 const routes = () => [
   {

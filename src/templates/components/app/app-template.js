@@ -1,4 +1,4 @@
-const appTemplate = () => `import Router from "./components/functionals/router";
+const appTemplate = () => `import Router from "./config/router";
 
 const App = () => {
   return <Router />;

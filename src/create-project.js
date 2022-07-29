@@ -17,7 +17,7 @@ import readmeTemplate from "./templates/config/readme-template";
 import environmentsTemplate from "./templates/config/environments-config-template";
 import apiConfigTemplate from "./templates/config/api-config-template";
 
-import CreateComponent from "./create-component";
+import createComponent from "./create-component";
 
 function createReactApp(projectName) {
   return new Promise(function (resolve, reject) {
@@ -100,7 +100,7 @@ function createFolderStructure() {
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/config/router/routes/routes.ts",
+    "./src/config/router/routes/routes.tsx",
     routesTemplate(),
     (err) => err && console.log(err)
   );
@@ -110,7 +110,7 @@ function createFolderStructure() {
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/config/router/router.ts",
+    "./src/config/router/router.tsx",
     routerTemplate(),
     (err) => err && console.log(err)
   );
@@ -132,12 +132,12 @@ function createFolderStructure() {
   fs.unlinkSync("./src/logo.svg");
 
   fs.appendFileSync(
-    "./src/App.ts",
+    "./src/App.tsx",
     appTemplate(),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/index.ts",
+    "./src/index.tsx",
     appIndexTemplate(),
     (err) => err && console.log(err)
   );
@@ -153,9 +153,9 @@ function createFolderStructure() {
     recursive: true,
   });
 
-  CreateComponent("page", "home", "Home");
-  CreateComponent("organism", "footer", "Footer");
-  CreateComponent("organism", "primary-navigation", "PrimaryNavigation");
+  createComponent("page", "home", "Home");
+  createComponent("organism", "footer", "Footer");
+  createComponent("organism", "primary-navigation", "PrimaryNavigation");
 
   const rawdata = fs.readFileSync("./package.json");
   const jsonPackage = JSON.parse(rawdata);
@@ -171,6 +171,7 @@ async function createProject(projectName) {
     await createReactApp(projectName);
     process.chdir(projectName);
     await installDependency("styled-components");
+    await installDependency("@types/styled-components");
     await installDependency("axios");
     await installDependency("react-router-dom");
     await installDependency("env-cmd");
