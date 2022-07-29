@@ -1,26 +1,35 @@
 const { spawn } = require("child_process");
 var fs = require("fs");
 
-import themeTemplate from "./templates/theme-template";
-import globalStylesTemplate from "./templates/global-styles-template";
-import routesTemplate from "./templates/routes-template";
-import indexTemplate from "./templates/index-template";
-import routerTemplate from "./templates/router-template";
-import appTemplate from "./templates/app-template";
-import appIndexTemplate from "./templates/app-index-template";
-import readmeTemplate from "./templates/readme-template";
-import environmentsView from "./templates/environments-view";
-import apiConfigTemplate from "./templates/apiConfig";
+// Component templates
+import appTemplate from "./templates/components/app/app-template";
+import appIndexTemplate from "./templates/components/app/app-index-template";
+import indexTemplate from "./templates/components/index";
 
-import createComponentFiles from "./create-component-files";
+// Style templates
+import themeTemplate from "./templates/styles/theme-template";
+import globalStylesTemplate from "./templates/styles/global-styles-template";
+
+// Config templates
+import routesTemplate from "./templates/config/routes-template";
+import routerTemplate from "./templates/config/router-template";
+import readmeTemplate from "./templates/config/readme-template";
+import environmentsTemplate from "./templates/config/environments-config-template";
+import apiConfigTemplate from "./templates/config/api-config-template";
+
+import CreateComponent from "./create-component";
 
 function createReactApp(projectName) {
   return new Promise(function (resolve, reject) {
-    console.log("We're setting up your project.");
     console.log(`Creating your project called '${projectName}'.`);
     console.log("Setting up React...");
 
-    const ls = spawn("npx", ["create-react-app", projectName]);
+    const ls = spawn("npx", [
+      "create-react-app",
+      projectName,
+      "--template",
+      "typescript",
+    ]);
 
     ls.on("error", (error) => {
       console.log(error.message);
@@ -31,6 +40,10 @@ function createReactApp(projectName) {
       console.log(`${projectName} has been initialized.`);
       console.log(`Now installing dependencies...`);
       resolve(code);
+    });
+
+    ls.stdout.on("data", (data) => {
+      console.log(data.toString());
     });
   });
 }
@@ -54,13 +67,13 @@ function installDependency(dependencyName) {
 
 function createFolderStructure() {
   console.log("Setting up folder structure");
-  fs.mkdirSync("./src/components/primitives", { recursive: true });
-  fs.mkdirSync("./src/components/constructs", { recursive: true });
-  fs.mkdirSync("./src/components/sections", { recursive: true });
+  fs.mkdirSync("./src/components/atoms", { recursive: true });
+  fs.mkdirSync("./src/components/molecules", { recursive: true });
+  fs.mkdirSync("./src/components/organisms", { recursive: true });
   fs.mkdirSync("./src/components/pages", { recursive: true });
   fs.mkdirSync("./src/components/pages/home", { recursive: true });
-  fs.mkdirSync("./src/components/functionals", { recursive: true });
-  fs.mkdirSync("./src/components/functionals/router", { recursive: true });
+  fs.mkdirSync("./src/components/layouts", { recursive: true });
+  fs.mkdirSync("./src/components/layouts/router", { recursive: true });
   fs.mkdirSync("./src/api", { recursive: true });
   fs.mkdirSync("./src/api/config", { recursive: true });
   fs.mkdirSync("./src/media/icons", { recursive: true });
@@ -69,61 +82,62 @@ function createFolderStructure() {
   fs.mkdirSync("./src/auth", { recursive: true });
   fs.mkdirSync("./src/state", { recursive: true });
   fs.mkdirSync("./src/config", { recursive: true });
-  fs.mkdirSync("./src/config/routes", { recursive: true });
+  fs.mkdirSync("./src/config/router", { recursive: true });
+  fs.mkdirSync("./src/config/router/routes", { recursive: true });
   fs.mkdirSync("./src/config/environments", { recursive: true });
   fs.mkdirSync("./src/metrics", { recursive: true });
   fs.mkdirSync("./src/styles", { recursive: true });
   fs.mkdirSync("./src/utils", { recursive: true });
 
   fs.appendFileSync(
-    "./src/styles/theme.js",
+    "./src/styles/theme.ts",
     themeTemplate(),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/styles/global-styles.js",
+    "./src/styles/global-styles.ts",
     globalStylesTemplate(),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/config/routes/routes.js",
+    "./src/config/router/routes/routes.ts",
     routesTemplate(),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/components/functionals/router/index.js",
+    "./src/config/router/index.ts",
     indexTemplate("router"),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/components/functionals/router/router.js",
+    "./src/config/router/router.ts",
     routerTemplate(),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
     "./src/config/environments/.env-local",
-    environmentsView(),
+    environmentsTemplate(),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/api/config/api-config.js",
+    "./src/api/config/api-config.ts",
     apiConfigTemplate(),
     (err) => err && console.log(err)
   );
 
-  fs.unlinkSync("./src/App.js");
+  fs.unlinkSync("./src/App.tsx");
   fs.unlinkSync("./src/App.css");
   fs.unlinkSync("./src/index.css");
-  fs.unlinkSync("./src/index.js");
+  fs.unlinkSync("./src/index.tsx");
   fs.unlinkSync("./src/logo.svg");
 
   fs.appendFileSync(
-    "./src/App.js",
+    "./src/App.ts",
     appTemplate(),
     (err) => err && console.log(err)
   );
   fs.appendFileSync(
-    "./src/index.js",
+    "./src/index.ts",
     appIndexTemplate(),
     (err) => err && console.log(err)
   );
@@ -134,14 +148,14 @@ function createFolderStructure() {
   );
 
   fs.mkdirSync("./src/components/pages/home", { recursive: true });
-  fs.mkdirSync("./src/components/sections/footer", { recursive: true });
-  fs.mkdirSync("./src/components/sections/primary-navigation", {
+  fs.mkdirSync("./src/components/organisms/footer", { recursive: true });
+  fs.mkdirSync("./src/components/organisms/primary-navigation", {
     recursive: true,
   });
 
-  createComponentFiles("page", "home", "Home");
-  createComponentFiles("section", "footer", "Footer");
-  createComponentFiles("section", "primary-navigation", "PrimaryNavigation");
+  CreateComponent("page", "home", "Home");
+  CreateComponent("organism", "footer", "Footer");
+  CreateComponent("organism", "primary-navigation", "PrimaryNavigation");
 
   const rawdata = fs.readFileSync("./package.json");
   const jsonPackage = JSON.parse(rawdata);

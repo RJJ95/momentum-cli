@@ -1,4 +1,4 @@
-const readmeTemplate = () => `# React Boilerplate
+# React Boilerplate
  
 This project has been kickstarted using Propulse.
  
@@ -34,11 +34,11 @@ This project has an opiniated folder structure.
 - src --- Very important folder. Houses all/most of our Javascript code.
   - api --- All of our API stuff is in here.
   - components --- All components are in here. Our app consists mostly of components, in all theur forms and epic glory.
-    - constructs --- Constructs are components which are constructed of other components. These can be primitives and other constructs.
-    - functionals --- Functionals are components which are not presented in the UI, but are still components.
+    - atoms --- These are the smallest components. They consist of nothing other than a single element.
+    - molecules --- Molecules are components which are constructed of other components. These can be atoms and other molecules.
+    - organisms --- Organisms are big chunks of a page. They can consist of atoms, and molecules.
+    - layouts --- Layouts are components which are not presented in the UI, but are still components.
     - pages --- Please make an educated guess.
-    - primitives --- These are the smallest components. They consist of nothing other than a single element.
-    - sections --- Sections are big chunks of a page. They can consist of primitives, and constructs.
   - config --- The config folder houses configuration files. These are mostly arrays with objects in them.
   - media --- Media houses all media of the project.
     - documents --- Test documents which we can use.
@@ -50,7 +50,3 @@ This project has an opiniated folder structure.
   - utils --- Utils is a folder where we can store our utility functions which can serve in multiple places.
  
 Enjoy coding!
-
-`;
-
-export default readmeTemplate;

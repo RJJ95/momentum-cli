@@ -1,6 +1,6 @@
 {
   "name": "propulse",
-  "version": "1.0.5",
+  "version": "1.0.37",
   "description": "A CLI to bootstrap React projects",
   "main": "src/index.js",
   "bin": {
@@ -21,9 +21,10 @@
   "license": "MIT",
   "dependencies": {
     "esm": "^3.2.25",
-    "inquirer": "^8.0.0"
+    "inquirer": "^8.0.0",
+    "mustache": "^4.2.0",
+    "node-fetch": "^3.2.9"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RJJ95/momentum-cli.git"

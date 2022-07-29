@@ -1,8 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-import createPrimitiveFiles from "./create-primitive-file";
-import createComponentFiles from "./create-component-files";
+import createComponentFiles from "./create-component";
 
 function addComponent() {
   inquirer
@@ -11,7 +10,7 @@ function addComponent() {
         type: "list",
         name: "type",
         message: "What kind of component do you want to create?",
-        choices: ["primitive", "construct", "section", "functional", "page"],
+        choices: ["atom", "molecule", "organism", "layout", "page"],
       },
       {
         type: "input",
@@ -24,34 +23,27 @@ function addComponent() {
       const componentNameWithoutCapitals = answers.name
         .replace(/\s+/g, "-")
         .toLowerCase();
+
       const componentNameCapitalized = answers.name
         .split(" ")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ")
         .replace(/\s+/g, "");
 
-      if (answers.type === "primitive") {
-        createPrimitiveFiles(
-          answers.type,
-          componentNameWithoutCapitals,
-          componentNameCapitalized
-        );
-      } else {
-        fs.mkdir(
-          `./src/components/${answers.type}s/${componentNameWithoutCapitals}`,
-          (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-              createComponentFiles(
-                answers.type,
-                componentNameWithoutCapitals,
-                componentNameCapitalized
-              );
-            }
+      fs.mkdir(
+        `./src/components/${answers.type}s/${componentNameWithoutCapitals}`,
+        (err) => {
+          if (err) {
+            console.log("An error occurred.");
+          } else {
+            createComponentFiles(
+              answers.type,
+              componentNameWithoutCapitals,
+              componentNameCapitalized
+            );
           }
-        );
-      }
+        }
+      );
     })
     .catch(console.error);
 }
